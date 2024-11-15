@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\models\Question;
+use App\Services\MinistryService;
 use App\Services\VacService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -11,10 +12,12 @@ class VacController extends Controller
 {
 
     private VacService $vacService;
+    private MinistryService $ministryService;
 
-    public function __construct(VacService $vacService)
+    public function __construct(VacService $vacService, MinistryService $ministryService)
     {
         $this->vacService = $vacService;
+        $this->ministryService = $ministryService;
     }
 
     public function show($external_id)
@@ -28,13 +31,15 @@ class VacController extends Controller
     public function index()
     {
         $questions = $this->vacService->getFrequentlyAskedQuestions();
-        return view('vac.index', compact('questions'));
+        $ministries = $this->ministryService->getAll();
+
+        return view('vac.index', compact('questions', 'ministries'));
     }
 
     public function findBySubject(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'subject' => 'string|max:255',
+            'subject' => 'required|string',
         ]);
 
         if ($validator->fails()) {
@@ -54,7 +59,7 @@ class VacController extends Controller
     public function findByMinistry(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'ministry' => 'string|max:255',
+            'ministry' => 'required|string',
         ]);
 
         if ($validator->fails()) {
@@ -66,8 +71,9 @@ class VacController extends Controller
 
         $validated = $validator->validated();
 
-        $questions = $this->vacService->findByMinistry($validated['subject']);
+        $questions = $this->vacService->findByMinistry($validated['ministry']);
+        $ministries = $this->ministryService->getAll();
 
-        return view('vac.index', compact('questions'));
+        return view('vac.index', compact('questions', 'ministries'));
     }
 }

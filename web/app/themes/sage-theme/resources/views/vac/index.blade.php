@@ -4,8 +4,13 @@
 
   <h1 class="text-xl font-semibold mb-4">Veelgestelde vragen</h1>
 
-  <form method="GET" class="mb-1">
-    <input type="text" name="ministry" placeholder="Zoek op ministerie" class="placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow" >
+  <form method="POST" action="/questions/ministry" class="mb-1">
+    <select name="ministry" id="ministry">
+      <option selected disabled>Maak keuze</option>
+      @foreach($ministries as $ministry)
+        <option value="{{ $ministry->name }}">{{ $ministry->title }}</option>
+      @endforeach
+    </select>
     <button class="bg-emerald-600 px-4 py-2 text-white rounded" type="submit">Zoek</button>
   </form>
   <form method="POST" action="/vac/subject" class="mb-1">
@@ -24,7 +29,7 @@
       @foreach($questions as $question)
         <tr>
           <td class="border p-2 border-slate-300">
-            <a href="/vac/{{ $question['id'] }}">
+            <a href="/questions/{{ $question['id'] }}">
               {{ $question['id'] }}
             </a>
           </td>
