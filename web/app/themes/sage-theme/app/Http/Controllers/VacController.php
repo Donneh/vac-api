@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App\models\Question;
 use App\Services\MinistryService;
+use App\Services\SubjectService;
 use App\Services\VacService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -12,12 +13,10 @@ class VacController extends Controller
 {
 
     private VacService $vacService;
-    private MinistryService $ministryService;
 
-    public function __construct(VacService $vacService, MinistryService $ministryService)
+    public function __construct(VacService $vacService)
     {
         $this->vacService = $vacService;
-        $this->ministryService = $ministryService;
     }
 
     public function show($external_id)
@@ -31,9 +30,8 @@ class VacController extends Controller
     public function index()
     {
         $questions = $this->vacService->getFrequentlyAskedQuestions();
-        $ministries = $this->ministryService->getAll();
 
-        return view('vac.index', compact('questions', 'ministries'));
+        return view('vac.index', compact('questions'));
     }
 
     public function findBySubject(Request $request)
@@ -52,7 +50,6 @@ class VacController extends Controller
         $validated = $validator->validated();
 
         $questions = $this->vacService->findBySubject($validated['subject']);
-
         return view('vac.index', compact('questions'));
     }
 
@@ -72,8 +69,7 @@ class VacController extends Controller
         $validated = $validator->validated();
 
         $questions = $this->vacService->findByMinistry($validated['ministry']);
-        $ministries = $this->ministryService->getAll();
 
-        return view('vac.index', compact('questions', 'ministries'));
+        return view('vac.index', compact('questions'));
     }
 }
