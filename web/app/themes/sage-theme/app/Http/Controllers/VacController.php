@@ -25,9 +25,22 @@ class VacController extends Controller
         return view('vac.show', compact('question'));
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $questions = $this->vacService->getFrequentlyAskedQuestions();
+        $validator = Validator::make($request->all(), [
+            'page' => 'integer',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()
+                ->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $validated = $validator->validated();
+
+        $questions = $this->vacService->getFrequentlyAskedQuestions($validated['page'] ?? 0);
 
         return view('vac.index', compact('questions'));
     }

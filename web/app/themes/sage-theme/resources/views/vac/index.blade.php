@@ -28,7 +28,6 @@
       <tr>
         <th class="border border-slate-300">Vraag</th>
         <th class="border border-slate-300">Antwoord</th>
-        <th class="border border-slate-300">Link</th>
       </tr>
     </thead>
     <tbody>
@@ -40,7 +39,6 @@
               {{ $question['question'] }}
               </a>
             </td>
-            <td class="border p-2 border-slate-300">Antwoord??</td>
             <td class="border p-2 border-slate-300">
               <a href="{{ $question['canonical'] }}" class="font-medium text-blue-600 hover:underline">
                 Link naar Artikel
@@ -50,18 +48,19 @@
           </tr>
         @endforeach
       @else
-        <td colspan="3">Er zijn geen resultaten gevonden.</td>
+        <td colspan="2">Er zijn geen resultaten gevonden.</td>
       @endif
     </tbody>
   </table>
-{{--  <div class="flex gap-2 mt-2">--}}
-{{--    <form method="GET">--}}
-{{--      <input type="hidden" name="page" value="{{ $page > 0 ? $page -1 : 0 }}">--}}
-{{--      <button type="submit" class="bg-emerald-600 p-2 text-white">Terug</button>--}}
-{{--    </form>--}}
-{{--    <form method="GET">--}}
-{{--      <input type="hidden" name="page" value="{{ $page + 1 }}">--}}
-{{--      <button type="submit" class="bg-emerald-600 p-2 text-white">Volgende</button>--}}
-{{--    </form>--}}
-{{--  </div>--}}
+
+  <div class="mt-2">
+    <form method="GET">
+      <input type="hidden" value="{{ request('page') ? request('page') < 1 ? 0 : request('page') - 1 : 0}}" name="page">
+      <button class="bg-emerald-600 p-2 text-white">Vorige</button>
+    </form>
+    <form method="GET">
+      <input type="hidden" value="{{ request('page') ? request('page') + 1 : 1 }}" name="page">
+      <button class="bg-emerald-600 p-2 text-white">Volgende</button>
+    </form>
+  </div>
 @endsection
