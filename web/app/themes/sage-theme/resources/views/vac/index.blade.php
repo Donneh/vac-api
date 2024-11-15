@@ -13,10 +13,18 @@
     </select>
     <button class="bg-emerald-600 px-4 py-2 text-white rounded" type="submit">Zoek</button>
   </form>
-  <form method="POST" action="/vac/subject" class="mb-1">
-    <input type="text" name="subject" placeholder="Zoek op onderwerp" class="placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow" >
+
+  <form method="POST" action="/questions/subject" class="mb-1">
+    <select name="subject" id="subject">
+      <option selected disabled>Maak keuze</option>
+      @foreach($subjects as $subject)
+        <option value="{{ $subject->name }}">{{ $subject->title }}</option>
+      @endforeach
+    </select>
     <button class="bg-emerald-600 px-4 py-2 text-white rounded" type="submit">Zoek</button>
-  </form>  <table class="border-collapse border border-slate-400">
+  </form>
+
+  <table class="border-collapse border border-slate-400">
     <thead class="bg-slate-200">
       <tr>
         <th class="border border-slate-300">id</th>
