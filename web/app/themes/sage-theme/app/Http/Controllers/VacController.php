@@ -54,7 +54,7 @@ class VacController extends Controller
     public function findByMinistry(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'subject' => 'string|max:255',
+            'ministry' => 'string|max:255',
         ]);
 
         if ($validator->fails()) {
