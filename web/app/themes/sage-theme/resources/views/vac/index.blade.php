@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-
   <h1 class="text-xl font-semibold mb-4">Veelgestelde vragen</h1>
 
   <form method="POST" action="/questions/ministry" class="mb-1">
@@ -34,23 +33,27 @@
       </tr>
     </thead>
     <tbody>
-      @foreach($questions as $question)
-        <tr>
-          <td class="border p-2 border-slate-300">
-            <a href="/questions/{{ $question['id'] }}">
-              {{ $question['id'] }}
-            </a>
-          </td>
-          <td class="border p-2 border-slate-300">{{ $question['question'] }}</td>
-          <td class="border p-2 border-slate-300">Antwoord??</td>
-          <td class="border p-2 border-slate-300">
-            <a href="{{ $question['canonical'] }}" class="font-medium text-blue-600 hover:underline">
-              Link naar Artikel
-            </a>
-          </td>
+      @if($questions)
+        @foreach($questions as $question)
+          <tr>
+            <td class="border p-2 border-slate-300">
+              <a href="/questions/{{ $question['id'] }}">
+                {{ $question['id'] }}
+              </a>
+            </td>
+            <td class="border p-2 border-slate-300">{{ $question['question'] }}</td>
+            <td class="border p-2 border-slate-300">Antwoord??</td>
+            <td class="border p-2 border-slate-300">
+              <a href="{{ $question['canonical'] }}" class="font-medium text-blue-600 hover:underline">
+                Link naar Artikel
+              </a>
+            </td>
 
-        </tr>
-      @endforeach
+          </tr>
+        @endforeach
+      @else
+        <td colspan="4">Er zijn geen resultaten gevonden.</td>
+      @endif
     </tbody>
   </table>
 {{--  <div class="flex gap-2 mt-2">--}}
