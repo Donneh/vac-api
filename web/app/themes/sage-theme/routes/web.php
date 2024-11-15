@@ -12,6 +12,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/vac', [VacController::class, 'index'])->name('vac');
-Route::post('/vac/subject', [VacController::class, 'findBySubject'])->name('vac.subject');
-Route::get('/vac/{external_id}', [VacController::class, 'show'])->name('vac.show');
+Route::get('/questions', [VacController::class, 'index'])->name('vac');
+Route::post('/questions/subject', [VacController::class, 'findBySubject'])->name('vac.subject');
+Route::get('/questions/{external_id}', [VacController::class, 'show'])->name('vac.show');
