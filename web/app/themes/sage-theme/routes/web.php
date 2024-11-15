@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\MinistryController;
+use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\VacController;
 use Illuminate\Support\Facades\Route;
 
@@ -19,3 +20,5 @@ Route::post('/questions/ministry', [VacController::class, 'findByMinistry'])->na
 Route::get('/questions/{external_id}', [VacController::class, 'show'])->name('vac.show');
 
 Route::get('/ministries', [MinistryController::class, 'index'])->name('ministries');
+
+Route::get('/subjects', [SubjectController::class, 'index'])->name('subjects');
