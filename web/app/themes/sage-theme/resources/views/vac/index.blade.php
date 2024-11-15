@@ -26,7 +26,6 @@
   <table class="border-collapse border border-slate-400">
     <thead class="bg-slate-200">
       <tr>
-        <th class="border border-slate-300">id</th>
         <th class="border border-slate-300">Vraag</th>
         <th class="border border-slate-300">Antwoord</th>
         <th class="border border-slate-300">Link</th>
@@ -37,11 +36,10 @@
         @foreach($questions as $question)
           <tr>
             <td class="border p-2 border-slate-300">
-              <a href="/questions/{{ $question['id'] }}">
-                {{ $question['id'] }}
+              <a href="/questions/{{ $question['id'] }}" class="font-medium text-blue-600 hover:underline">
+              {{ $question['question'] }}
               </a>
             </td>
-            <td class="border p-2 border-slate-300">{{ $question['question'] }}</td>
             <td class="border p-2 border-slate-300">Antwoord??</td>
             <td class="border p-2 border-slate-300">
               <a href="{{ $question['canonical'] }}" class="font-medium text-blue-600 hover:underline">
@@ -52,7 +50,7 @@
           </tr>
         @endforeach
       @else
-        <td colspan="4">Er zijn geen resultaten gevonden.</td>
+        <td colspan="3">Er zijn geen resultaten gevonden.</td>
       @endif
     </tbody>
   </table>
