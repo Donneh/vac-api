@@ -8,7 +8,7 @@
     <input type="text" name="ministry" placeholder="Zoek op ministerie" class="placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow" >
     <button class="bg-emerald-600 px-4 py-2 text-white rounded" type="submit">Zoek</button>
   </form>
-  <form method="GET" class="mb-1">
+  <form method="POST" action="/vac/subject" class="mb-1">
     <input type="text" name="subject" placeholder="Zoek op onderwerp" class="placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow" >
     <button class="bg-emerald-600 px-4 py-2 text-white rounded" type="submit">Zoek</button>
   </form>  <table class="border-collapse border border-slate-400">
@@ -23,7 +23,11 @@
     <tbody>
       @foreach($questions as $question)
         <tr>
-          <td class="border p-2 border-slate-300">{{ $question['id'] }}</td>
+          <td class="border p-2 border-slate-300">
+            <a href="/vac/{{ $question['id'] }}">
+              {{ $question['id'] }}
+            </a>
+          </td>
           <td class="border p-2 border-slate-300">{{ $question['question'] }}</td>
           <td class="border p-2 border-slate-300">Antwoord??</td>
           <td class="border p-2 border-slate-300">
@@ -36,14 +40,14 @@
       @endforeach
     </tbody>
   </table>
-  <div class="flex gap-2 mt-2">
-    <form method="GET">
-      <input type="hidden" name="page" value="{{ $page > 0 ? $page -1 : 0 }}">
-      <button type="submit" class="bg-emerald-600 p-2 text-white">Terug</button>
-    </form>
-    <form method="GET">
-      <input type="hidden" name="page" value="{{ $page + 1 }}">
-      <button type="submit" class="bg-emerald-600 p-2 text-white">Volgende</button>
-    </form>
-  </div>
+{{--  <div class="flex gap-2 mt-2">--}}
+{{--    <form method="GET">--}}
+{{--      <input type="hidden" name="page" value="{{ $page > 0 ? $page -1 : 0 }}">--}}
+{{--      <button type="submit" class="bg-emerald-600 p-2 text-white">Terug</button>--}}
+{{--    </form>--}}
+{{--    <form method="GET">--}}
+{{--      <input type="hidden" name="page" value="{{ $page + 1 }}">--}}
+{{--      <button type="submit" class="bg-emerald-600 p-2 text-white">Volgende</button>--}}
+{{--    </form>--}}
+{{--  </div>--}}
 @endsection

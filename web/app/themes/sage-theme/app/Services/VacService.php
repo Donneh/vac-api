@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\models\Question;
 use Illuminate\Support\Facades\Http;
 
 class VacService
@@ -47,7 +48,7 @@ class VacService
         return $questions;
     }
 
-    public function findBySubject(string $subject): array
+    public function findBySubject($subject): array
     {
         $response = Http::get(self::BASE_URL . "/faq/subjects/" . $subject, [
             'output' => self::API_OUTPUT,
@@ -76,5 +77,28 @@ class VacService
             'question' => $question->question,
             'last_modified' => $question->lastmodified,
         ];
+    }
+
+    public function findById($external_id)
+    {
+        $question = Question::where('external_id', $external_id)->first();
+        if (!$question) {
+            $response = Http::get(self::BASE_URL . "/faq/" . $external_id, [
+                'output' => self::API_OUTPUT,
+            ]);
+
+            if ($response->successful()) {
+                $response = json_decode($response->body());
+
+                $question = new Question();
+                $question->question = $response->question;
+                $question->canonical = $response->canonical;
+                $question->content = json_encode($response->content);
+                $question->external_id = $response->id;
+                $question->save();
+            }
+        }
+
+        return $question;
     }
 }

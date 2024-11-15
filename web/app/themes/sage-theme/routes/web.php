@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\VacController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -11,4 +12,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::view('/vac', 'vac.index')->name('vac');
+Route::get('/vac', [VacController::class, 'index'])->name('vac');
+Route::post('/vac/subject', [VacController::class, 'findBySubject'])->name('vac.subject');
+Route::get('/vac/{external_id}', [VacController::class, 'show'])->name('vac.show');
