@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Services\SubjectService;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
 class SubjectController extends Controller

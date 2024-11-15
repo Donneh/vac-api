@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\models\Question;
+use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
 
 class VacService
@@ -20,14 +21,7 @@ class VacService
             'offset' => self::OFFSET + $page * self::ROWS,
         ]);
 
-        $response = json_decode($response->body());
-
-        $questions = [];
-        foreach ($response as $question) {
-            $questions[] = $this->questionFromArray($question);
-        }
-
-        return $questions;
+        return $this->fetchQuestions($response);
     }
 
     public function findByMinistry(string $ministry): array
@@ -38,14 +32,7 @@ class VacService
             'offset' => self::OFFSET
         ]);
 
-        $response = json_decode($response->body());
-
-        $questions = [];
-        foreach ($response as $faq) {
-            $questions[] = $this->questionFromArray($faq);
-        }
-
-        return $questions;
+        return $this->fetchQuestions($response);
     }
 
     public function findBySubject($subject): array
@@ -56,15 +43,7 @@ class VacService
             'offset' => self::OFFSET
         ]);
 
-        $response = json_decode($response->body());
-
-        $questions = [];
-        foreach ($response as $question) {
-            $questions[] = $this->questionFromArray($question);
-        }
-
-
-        return $questions;
+        return $this->fetchQuestions($response);
     }
 
     private function questionFromArray($question): array
@@ -100,5 +79,17 @@ class VacService
         }
 
         return $question;
+    }
+
+    public function fetchQuestions(Response $response): array
+    {
+        $response = json_decode($response->body());
+
+        $questions = [];
+        foreach ($response as $question) {
+            $questions[] = $this->questionFromArray($question);
+        }
+
+        return $questions;
     }
 }

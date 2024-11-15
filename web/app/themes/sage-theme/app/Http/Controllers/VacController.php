@@ -1,9 +1,6 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\models\Question;
-use App\Services\MinistryService;
-use App\Services\SubjectService;
 use App\Services\VacService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -22,6 +19,7 @@ class VacController extends Controller
     public function show($external_id)
     {
         $question = $this->vacService->findById($external_id);
+        // @TODO: mooiere oplossing bedenken voor het decoden van de json content
         $question->content = json_decode($question->content);
 
         return view('vac.show', compact('question'));

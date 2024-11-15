@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Services\MinistryService;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
 class MinistryController extends Controller
