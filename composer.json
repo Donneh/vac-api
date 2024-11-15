@@ -49,7 +49,6 @@
     "roots/wp-config": "1.0.0",
     "roots/wp-password-bcrypt": "1.2.0",
     "wpackagist-theme/twentytwentyfive": "^1.0",
-    "roots/acorn": "^4.3",
     "ext-simplexml": "*"
   },
   "require-dev": {
